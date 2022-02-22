@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sol & Terra & Lua</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js" integrity="sha512-NxocnqsXP3zm0Xb42zqVMvjQIktKEpTIbCXXyhBPxqGZHqhcOXHs4pXI/GoZ8lE+2NJONRifuBpi9DxC58L0Lw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+  <style>
+    body { overflow: hidden; margin: auto; }
+  </style>
+  <script>
+    let t = 0;
+
+    function generateEarthAndMoon(t) {
+      const earthX = 200 * Math.cos(t) + width / 2;
+      const earthY = 200 * Math.sin(t) + height / 2;
+
+      const moon_x = 50 * Math.cos(t*3) + earthX;
+      const moon_y = 50 * Math.sin(t*3) + earthY;
+
+      fill('blue');
+      circle(earthX, earthY, 50);
+
+      fill('gray');
+      circle(moon_x, moon_y, 25);
+    }
+    function setup() {
+      createCanvas(windowWidth, windowHeight);
+    }
+
+    function draw() {
+      background(0);
+      fill('yellow');
+      circle(width/ 2, height / 2, 100);
+      generateEarthAndMoon(t += 0.01);
+    }
+
+    function windowResized() { resizeCanvas(windowWidth, windowHeight); }
+  </script>
+</body>
+</html>

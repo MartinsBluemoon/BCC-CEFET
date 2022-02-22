@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bezier</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js" integrity="sha512-NxocnqsXP3zm0Xb42zqVMvjQIktKEpTIbCXXyhBPxqGZHqhcOXHs4pXI/GoZ8lE+2NJONRifuBpi9DxC58L0Lw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+  <style>
+    body { overflow: hidden; margin: auto; }
+  </style>
+  <script>
+    const points = [[0, 200], [0, 0], [200, 0]], bezierPoints = [];
+
+    function generateBezier() {
+      for (let t = 0; t <= 1; t += 0.1) {
+        const [xA, yA] = points[0];
+        const [xB, yB] = points[1];
+        const [xC, yC] = points[2];
+
+        const xD = (xA - xB) * t + xB;
+        const yD = (yA - yB) * t + yB;
+
+        const xE = (xB - xC) * t + xC;
+        const yE = (yB - yC) * t + yC;
+
+        const xF = (xD - xE) * t + xE;
+        const yF = (yD - yE) * t + yE;
+
+        bezierPoints.push([ (xF + width) / 2, (-yF + height) / 2]);
+      }
+    }
+
+    function setup() {
+      createCanvas(windowWidth, windowHeight);
+      noFill();
+      stroke(255);
+      generateBezier();
+    }
+
+    function draw() {
+      background(0);
+      for (const [x, y] of points) circle(...[ (x + width) / 2, (-y + height) / 2], 10);
+      beginShape(CURVE);
+      for (point of bezierPoints) vertex(...point);
+      endShape();
+    }
+
+    function windowResized() { resizeCanvas(windowWidth, windowHeight); }
+  </script>
+</body>
+</html>
